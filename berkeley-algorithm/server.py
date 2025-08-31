@@ -25,7 +25,13 @@ class Server:
             await websocket.send('What is your time?')
             response = await websocket.recv()
             websocket.client_time = float(response)
-            await self.berkeley_algorithm() 
+            
+            if all(hasattr(c, 'client_time') for c in self.clients):
+                await self.berkeley_algorithm() 
+            
+            await asyncio.sleep(5)
+        except Exception as e:
+            print(f'Server error: {e}')            
         finally:
             self.clients.remove(websocket)
 

@@ -14,11 +14,13 @@ class Client:
     async def connect(self):
         uri = 'ws://localhost:8000'
         async with websockets.connect(uri) as websocket:
-            print("Connected to server")
+            try:
+                print("Connected to server")
 
-            await websocket.recv()
-            await websocket.send(str(self.current_time))
-            response = await websocket.recv()
-            self.current_time = float(response)
-            print(f'New client time: {self.clock.seconds_to_hours(self.current_time)}')
-
+                await websocket.recv()
+                await websocket.send(str(self.current_time))
+                response = await websocket.recv()
+                self.current_time = float(response)
+                print(f'New client time: {self.clock.seconds_to_hours(self.current_time)}')
+            except Exception as e:
+                print(f'Client error: {e}')
