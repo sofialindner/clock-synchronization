@@ -22,5 +22,7 @@ class Client:
                 response = await websocket.recv()
                 self.current_time = float(response)
                 print(f'New client time: {self.clock.seconds_to_hours(self.current_time)}')
+            except websockets.ConnectionClosedOK:
+                print("Connection closed by server.")
             except Exception as e:
                 print(f'Client error: {e}')

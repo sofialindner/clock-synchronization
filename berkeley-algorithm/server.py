@@ -28,8 +28,6 @@ class Server:
             
             if all(hasattr(c, 'client_time') for c in self.clients):
                 await self.berkeley_algorithm() 
-            
-            await asyncio.sleep(5)
         except Exception as e:
             print(f'Server error: {e}')            
         finally:
